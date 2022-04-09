@@ -1,4 +1,4 @@
-const NUMERICAL_INFORMATION_REGEX : RegExp = /\d([,.]?\d)*\s*(k?cal(ories?)?|kj)/ig
+const NUMERICAL_INFORMATION_REGEX: RegExp = /\d([,.]?\d)*\s*(k?cal(ories?)?|kj)/ig
 
 function hideCalorieInformation(element: ChildNode) {
     for (let node of element.childNodes) {
