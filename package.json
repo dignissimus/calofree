@@ -5,7 +5,8 @@
   "main": "calofree.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config src/webpack.config.ts"
+    "build": "webpack --config src/webpack.config.ts",
+    "package": "./scripts/package.sh"
   },
   "repository": {
     "type": "git",
