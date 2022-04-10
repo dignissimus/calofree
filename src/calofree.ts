@@ -1,4 +1,5 @@
 const NUMERICAL_INFORMATION_REGEX: RegExp = /\d([,.]?\d)*\s*(k?cal(ories?)?|kj)/ig
+const DELETE_ENTIRELY_REGEX: RegExp = /:?\s*\(\d([,.]?\d)*\s*(k?cal(ories?)?|kj)\)/ig
 
 interface TextBreak {
     node: Node;
