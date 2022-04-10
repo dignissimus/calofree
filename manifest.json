@@ -6,6 +6,10 @@
 
   "description": "Hides calorie information on websites",
 
+  "permissions": [
+      "storage"
+  ],
+
   "icons": {
     "48": "icons/calofree-48.png",
     "128": "icons/calofree-128.png"
@@ -22,6 +26,12 @@
       "default_icon": "icons/calofree-48.png",
       "default_title": "Calofree",
       "default_popup": "src/calofree.html"
+  },
+
+  "options_ui": {
+      "page": "src/calofree.html",
+      "browser_style": false,
+      "chrome_style": false
   }
 
 }
