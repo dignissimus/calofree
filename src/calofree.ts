@@ -3,8 +3,8 @@ import { RemovalOption, TextBreak } from "./types"
 const NUMERICAL_INFORMATION_REGEX: RegExp = /\d([,.]?\d)*\s*(k?cal(ories?)?|kj)/ig
 const DELETE_ENTIRELY_REGEX: RegExp = /:?=?\s*\(?\d([,.]?\d)*\s*(k?cal(ories?)?|kj)\)?/ig
 
-function getCalofreeRegex(): RegExp {
-    switch(getCalofreeOption()) {
+function getCalofreeRegex(removalOption: RemovalOption): RegExp {
+    switch(removalOption) {
         case RemovalOption.Cover:
         case RemovalOption.Censor:
             return NUMERICAL_INFORMATION_REGEX;
@@ -14,12 +14,8 @@ function getCalofreeRegex(): RegExp {
     }
 }
 
-function getCalofreeOption(): RemovalOption {
-    return RemovalOption.Cover;
-}
-
-function createHiddenNode(match: string) {
-    switch(getCalofreeOption()){
+function createHiddenNode(match: string, removalOption: RemovalOption) {
+    switch(removalOption){
         case RemovalOption.Cover:
             const hiddenNode = document.createElement("a");
             hiddenNode.textContent = "[hidden]";
@@ -45,11 +41,11 @@ function createHiddenNode(match: string) {
     }
 }
 
-function hideCalorieInformation(element: ChildNode) {
+function hideCalorieInformation(element: ChildNode, removalOption: RemovalOption) {
     for (let node of Array.from(element.childNodes)) {
         switch (node.nodeType) {
             case Node.ELEMENT_NODE:
-                hideCalorieInformation(node);
+                hideCalorieInformation(node, removalOption);
                 break;
             case Node.TEXT_NODE:
                 let originalTextContent = node.textContent!;
@@ -57,7 +53,7 @@ function hideCalorieInformation(element: ChildNode) {
                 let previousOffset = 0;
                 let previousNode = node;
                 originalTextContent.replace(
-                    getCalofreeRegex(),
+                    getCalofreeRegex(removalOption),
                     function(match, _p1, _p2, _p3, offset, string){
                         breaks.push(
                             {
@@ -69,7 +65,7 @@ function hideCalorieInformation(element: ChildNode) {
 
                         previousOffset = offset + match.length;
 
-                        const newNode = createHiddenNode(match);
+                        const newNode = createHiddenNode(match, removalOption);
 
                         previousNode.after(newNode);
 
@@ -86,14 +82,24 @@ function hideCalorieInformation(element: ChildNode) {
                     textBreak.node.textContent = originalTextContent.substring(textBreak.start, textBreak.end);
                 break;
             case Node.DOCUMENT_NODE:
-                hideCalorieInformation(node);
+                hideCalorieInformation(node, removalOption);
         }
     }
 }
 
 function calofree(){
     if (true) {
-        hideCalorieInformation(document.body);
+        browser.storage.local.get("option").then(
+            function (result) {
+                hideCalorieInformation(
+                    document.body,
+                    <RemovalOption> RemovalOption[result.option as keyof typeof RemovalOption]
+                );
+            },
+            function (result) {
+                hideCalorieInformation(document.body, RemovalOption.Cover);
+            }
+        );
     }
 }
 
