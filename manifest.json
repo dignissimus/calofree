@@ -7,8 +7,8 @@
   "description": "Hides calorie information on websites",
 
   "icons": {
-    "48": "icons/new-icon-48.png",
-    "128": "icons/new-icon-128.png"
+    "48": "icons/calofree-48.png",
+    "128": "icons/calofree-128.png"
   },
 
   "content_scripts": [

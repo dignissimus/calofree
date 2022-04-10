@@ -1,0 +1,30 @@
+body {
+  color: #2E2C2F;
+  background-color: #edf7f6;
+}
+
+h1 {
+  font-family: 'Old Standard TT', serif;
+  font-style: italic;
+}
+
+.title {
+  text-align: center;
+}
+
+.options-div, .option-item {
+  text-align: center;
+}
+
+.option-text {
+  padding: 10px;
+}
+
+.option-item {
+  background-color: #F78E69;
+  cursor: pointer;
+}
+
+.option-item.selected {
+  background-color: #5aa7a7
+}
