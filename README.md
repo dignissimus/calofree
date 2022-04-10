@@ -1,5 +1,5 @@
 # Calofree
-A light-weight extension to hide calorie information on websites
+A light-weight browser extension to hide calorie information on websites
 
 
 # Installation
