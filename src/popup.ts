@@ -1,3 +1,4 @@
+import browser from "webextension-polyfill"
 import { RemovalOption } from "./types"
 
 let selectedOption = RemovalOption.Cover;

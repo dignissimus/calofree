@@ -8,6 +8,6 @@
       "rootDir": "src",
       "outDir": "dist/js",
       "noEmitOnError": true,
-      "typeRoots": [ "node_modules/@types", "node_modules/web-ext-types" ]
+      "typeRoots": [ "node_modules/@types" ]
    }
 }
