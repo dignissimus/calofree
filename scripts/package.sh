@@ -20,6 +20,7 @@ cp src/calofree.{html,css} build/src
 cp manifest.json build
 cd build
 zip -r ../target/calofree.xpi *
+cp ../target/calofree.xpi ../target/calofree-opera.crx
 cp ../manifest.chrome.json manifest.json
 zip -r ../target/calofree.crx *
 cd ..
