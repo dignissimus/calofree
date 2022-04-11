@@ -1,13 +1,13 @@
 import { RemovalOption } from "./types"
 
 let selectedOption = RemovalOption.Cover;
-const ids = ["option-1", "option-2", "option-3"];
+const ids = ["option-censor", "option-cover", "option-delete"];
 
 
 function loadOption(removalOption: RemovalOption){
-    const censor = document.getElementById("option-1")!;
-    const cover = document.getElementById("option-2")!;
-    const remove = document.getElementById("option-3")!;
+    const censor = document.getElementById("option-censor")!;
+    const cover = document.getElementById("option-cover")!;
+    const remove = document.getElementById("option-delete")!;
     selectedOption = removalOption;
 
     switch(removalOption){
@@ -57,13 +57,13 @@ function selectOption(element: HTMLElement){
 
 function updateOption(element: HTMLElement) {
     switch(element.id){
-        case "option-1":
+        case "option-censor":
             setOption(RemovalOption.Censor);
             break;
-        case "option-2":
+        case "option-cover":
             setOption(RemovalOption.Cover);
             break
-        case "option-3":
+        case "option-delete":
         default:
             setOption(RemovalOption.Delete);
     }
@@ -80,6 +80,7 @@ window.addEventListener("load", function(){
             const element = (<HTMLElement> event.target).parentElement!;
             selectOption(element);
             updateOption(element);
+            browser.tabs.reload();
         }
     );
   }
