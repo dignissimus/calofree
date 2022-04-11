@@ -1,3 +1,4 @@
+import browser from "webextension-polyfill"
 import { RemovalOption, TextBreak } from "./types"
 
 const NUMERICAL_INFORMATION_REGEX: RegExp = /\d([,.]?\d)*\s*(k?cal(ories?)?|kj)/ig
