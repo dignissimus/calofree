@@ -6,6 +6,6 @@ A light-weight browser extension to hide calorie information on websites
 | Browser | Download |
 |---------|----------|
 | Chrome  |  |
-| Firefox |  |
+| Firefox | [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/calofree/) |
 | Edge    |  |
 | Opera   |  |
