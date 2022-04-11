@@ -1,8 +1,10 @@
 import browser from "webextension-polyfill"
 import { RemovalOption, TextBreak } from "./types"
+import { SELECTORS } from "./selectors"
 
 const NUMERICAL_INFORMATION_REGEX: RegExp = /\d([,.]?\d)*\s*(k?cal(ories?)?|kj)/ig
 const DELETE_ENTIRELY_REGEX: RegExp = /:?=?\s*\(?\d([,.]?\d)*\s*(k?cal(ories?)?|kj)\)?/ig
+const REMOVE_ALL_REGEX: RegExp = /.*/ig
 
 function getCalofreeRegex(removalOption: RemovalOption): RegExp {
     switch(removalOption) {
@@ -42,7 +44,7 @@ function createHiddenNode(match: string, removalOption: RemovalOption) {
     }
 }
 
-function hideCalorieInformation(element: ChildNode, removalOption: RemovalOption) {
+function hideCalorieInformation(element: ChildNode, removalOption: RemovalOption,  regexOverride?: RegExp) {
     if (removalOption === RemovalOption.Disable)
         return;
     for (let node of Array.from(element.childNodes)) {
@@ -56,7 +58,7 @@ function hideCalorieInformation(element: ChildNode, removalOption: RemovalOption
                 let previousOffset = 0;
                 let previousNode = node;
                 originalTextContent.replace(
-                    getCalofreeRegex(removalOption),
+                    regexOverride || getCalofreeRegex(removalOption),
                     function(match, _p1, _p2, _p3, offset, string){
                         breaks.push(
                             {
@@ -90,14 +92,31 @@ function hideCalorieInformation(element: ChildNode, removalOption: RemovalOption
     }
 }
 
+function hideSelector(selector: string, removalOption: RemovalOption) {
+    for (let element of Array.from(document.querySelectorAll(selector))) {
+        hideCalorieInformation(
+            element,
+            removalOption,
+            REMOVE_ALL_REGEX
+        );
+    }
+}
+
 function calofree(){
     if (true) {
         browser.storage.local.get("option").then(
             function (result) {
+                let removalOption = <RemovalOption> RemovalOption[result.option as keyof typeof RemovalOption]
                 hideCalorieInformation(
                     document.body,
-                    <RemovalOption> RemovalOption[result.option as keyof typeof RemovalOption]
+                    removalOption
                 );
+                for (let selector of SELECTORS) {
+                    hideSelector(
+                        selector,
+                        removalOption
+                    );
+                }
             },
             function (result) {
                 hideCalorieInformation(document.body, RemovalOption.Cover);
