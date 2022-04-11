@@ -7,5 +7,6 @@ export interface TextBreak {
 export enum RemovalOption {
     Censor,
     Cover,
-    Delete
+    Delete,
+    Disable
 }

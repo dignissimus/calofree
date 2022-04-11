@@ -43,6 +43,8 @@ function createHiddenNode(match: string, removalOption: RemovalOption) {
 }
 
 function hideCalorieInformation(element: ChildNode, removalOption: RemovalOption) {
+    if (removalOption === RemovalOption.Disable)
+        return;
     for (let node of Array.from(element.childNodes)) {
         switch (node.nodeType) {
             case Node.ELEMENT_NODE:

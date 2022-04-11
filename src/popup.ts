@@ -2,13 +2,14 @@ import browser from "webextension-polyfill"
 import { RemovalOption } from "./types"
 
 let selectedOption = RemovalOption.Cover;
-const ids = ["option-censor", "option-cover", "option-delete"];
+const ids = ["option-censor", "option-cover", "option-delete", "option-disable"];
 
 
 function loadOption(removalOption: RemovalOption){
     const censor = document.getElementById("option-censor")!;
     const cover = document.getElementById("option-cover")!;
     const remove = document.getElementById("option-delete")!;
+    const disable = document.getElementById("option-disable")!;
     selectedOption = removalOption;
 
     switch(removalOption){
@@ -17,6 +18,9 @@ function loadOption(removalOption: RemovalOption){
             break;
         case RemovalOption.Censor:
             selectOption(censor);
+            break
+        case RemovalOption.Disable:
+            selectOption(disable);
             break
         case RemovalOption.Delete:
         default:
@@ -63,6 +67,9 @@ function updateOption(element: HTMLElement) {
             break;
         case "option-cover":
             setOption(RemovalOption.Cover);
+            break
+        case "option-disable":
+            setOption(RemovalOption.Disable);
             break
         case "option-delete":
         default:
